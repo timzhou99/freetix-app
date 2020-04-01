@@ -92,7 +92,7 @@ An Example Ticket:
 
 /events/eventID/purchase - page for purchasing a ticket for an event
 
-![events_eventID_purchase](documentation/events-eventID-purchase.PNG)
+![events_eventID_purchase](documentation/events-eventid-purchase.PNG)
 
 /events/eventID - page for viewing the details of an event
 
