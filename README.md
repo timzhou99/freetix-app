@@ -84,7 +84,7 @@ An Example Ticket:
 
 /events/create - page for creating a new event
 
-![events_create](documentation/events-create.png)
+![events_create](documentation/events-create.PNG)
 
 /events/eventID/manage - page for managing an existing event
 
