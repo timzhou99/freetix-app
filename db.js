@@ -9,7 +9,10 @@ const User = new mongoose.Schema({
     // username provided by authentication plugin
     // password hash provided by authentication plugin
     events:  [{ type: mongoose.Schema.Types.ObjectId, ref: 'Event' }],
-    tickets:  [{ type: mongoose.Schema.Types.ObjectId, ref: 'Ticket' }]
+    tickets:  [{ type: mongoose.Schema.Types.ObjectId, ref: 'Ticket' }],
+
+    userCity: {type: String, required: true},
+    userState: {type: String, required: true}
 });
 
 // an event
@@ -50,7 +53,6 @@ const Ticket = new mongoose.Schema({
 
     ticketType: {type: String, required: true},
     ticketValue: {type: Number, required: true},
-
     ticketStatus: {type: String, required: true},
 
     createdAt: {type: Date, required: true}
