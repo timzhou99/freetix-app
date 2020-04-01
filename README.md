@@ -30,23 +30,28 @@ An Example Event with a List of Ticket IDs:
 
 ```javascript
 {
-  manager: // a reference to a User object
+  eventManager: // a reference to a User object
+  
   eventName: "Travis Scott Concert",
-  eventID: "UNIQUE KEY",
+  eventDescription: "The best event of the month!",
+  eventActive: true,
+  
   eventDate: //DateObject
   eventTimeStart: //time the event starts
   eventTimeEnd: //time the event ends
+  
   eventAddress: "40 W 4th Street",
   eventCity: "New York",
   eventState: "New York",
-  eventDescription: "The best event of the month!",
-  maxParticipants: 500,
-  currentParticipants: 346,
+
+  maxQuantity: 500,
+  currentQuantity: 346,
   tickets: [
     { ticketID: "UNIQUE KEY", ticketType: "General Admission", ticketValue: 150.00},
     { ticketID: "UNIQUE KEY", ticketType: "VIP Admission", ticketValue: 350.00},
   ],
-  createdAt: // timestamp
+  
+  eventID: "UNIQUE KEY"
 }
 ```
 
@@ -56,10 +61,13 @@ An Example Ticket:
 {
   ticketHolder: // a reference to a User object
   eventID: "UNIQUE KEY",
+  
   ticketType: "General Admission",
   ticketValue: 150.00,
-  paymentStatus: "Refunded",
+  ticketStatus: "Cancelled",
+  
   createdAt: // timestamp
+  ticketID: "UNIQUE KEY"
 }
 ```
 
