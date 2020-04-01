@@ -88,6 +88,10 @@ An Example Ticket:
 
 ![events eventID_manage](documentation/events-manage.PNG)
 
+/events/hosting - page to view and manage all events the user is hosting
+
+![events_hosting](documentation/events-hosting.PNG)
+
 /events/eventID - page for viewing the details of an event and option to purchase a ticket
 
 ![events_eventID](documentation/events-eventID.PNG)
