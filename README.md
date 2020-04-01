@@ -88,31 +88,31 @@ An Example Ticket:
 
 /events/eventID/manage - page for managing an existing event
 
-![list create](documentation/list-create.png)
+![events eventID_manage](documentation/events-manage.PNG)
 
 /events/eventID/purchase - page for purchasing a ticket for an event
 
-![list create](documentation/list-create.png)
+![events_eventID_purchase](documentation/events-eventID-purchase.PNG)
 
 /events/eventID - page for viewing the details of an event
 
-![list create](documentation/list-create.png)
+![events_eventID](documentation/events-eventID.PNG)
 
 /events - page for showing all events
 
-![list](documentation/list.png)
+![events](documentation/events.PNG)
 
 /tickets/ticketID/manage - page for managing an existing ticket
 
-![list](documentation/list-slug.png)
+![tickets_ticketID_manage](documentation/tickets-ticketID-manage.PNG)
 
 /tickets/ticketID - page for viewing the details of an existing ticket
 
-![list](documentation/list-slug.png)
+![tickets_ticketID](documentation/tickets-ticketID.PNG)
 
 /tickets - page for showing all tickets
 
-![list](documentation/list-slug.png)
+![tickets](documentation/tickets.PNG)
 
 ## Site map
 
