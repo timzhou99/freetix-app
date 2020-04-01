@@ -94,7 +94,7 @@ An Example Ticket:
 
 ![events_eventID](documentation/events-eventID.PNG)
 
-/events - page for showing all events
+/events - page for showing all events and the ability to filter them
 
 ![events](documentation/events.PNG)
 
