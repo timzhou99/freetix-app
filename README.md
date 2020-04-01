@@ -21,8 +21,12 @@ An Example User:
 {
   username: "timzhou99",
   hash: // a password hash,
+  
   events: // an array of references to Event documents
   tickets: //an array of references to Ticket documents
+  
+  userCity: "New York",
+  userState: "New York"
 }
 ```
 
@@ -73,21 +77,39 @@ An Example Ticket:
 
 ## [Link to Commented First Draft Schema](db.js) 
 
-(___TODO__: create a first draft of your Schemas in db.js and link to it_)
-
 ## Wireframes
 
 (___TODO__: wireframes for all of the pages on your site; they can be as simple as photos of drawings or you can use a tool like Balsamiq, Omnigraffle, etc._)
 
-/list/create - page for creating a new shopping list
+/events/create - page for creating a new event
 
 ![list create](documentation/list-create.png)
 
-/list - page for showing all shopping lists
+/events/eventID/manage - page for managing an existing event
+
+![list create](documentation/list-create.png)
+
+/events/eventID/purchase - page for purchasing a ticket for an event
+
+![list create](documentation/list-create.png)
+
+/events/eventID - page for viewing the details of an event
+
+![list create](documentation/list-create.png)
+
+/events - page for showing all events
 
 ![list](documentation/list.png)
 
-/list/slug - page for showing specific shopping list
+/tickets/ticketID/manage - page for managing an existing ticket
+
+![list](documentation/list-slug.png)
+
+/tickets/ticketID - page for viewing the details of an existing ticket
+
+![list](documentation/list-slug.png)
+
+/tickets - page for showing all tickets
 
 ![list](documentation/list-slug.png)
 
