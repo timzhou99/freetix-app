@@ -98,11 +98,7 @@ An Example Ticket:
 
 ![events](documentation/events.PNG)
 
-/tickets/ticketID/manage - page for managing an existing ticket
-
-![tickets_ticketID_manage](documentation/tickets-ticketID-manage.PNG)
-
-/tickets/ticketID - page for viewing the details of an existing ticket
+/tickets/ticketID - page for viewing the details of an existing ticket and option to cancel it
 
 ![tickets_ticketID](documentation/tickets-ticketID.PNG)
 
