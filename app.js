@@ -3,6 +3,8 @@ require('./db');
 const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
+const qrcode = require('qrcode');
+const passport = require('passport');
 
 const app = express();
 
