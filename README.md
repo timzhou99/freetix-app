@@ -129,14 +129,12 @@ An Example Ticket:
 
 * (5 points) Integrate user authentication
     * I'm going to be using passport for user authentication
-    * And account has been made for testing; I'll email you the password
-    * see <code>cs.nyu.edu/~jversoza/ait-final/register</code> for register page
-    * see <code>cs.nyu.edu/~jversoza/ait-final/login</code> for login page
-* (4 points) Perform client side form validation using a JavaScript library
-    * see <code>cs.nyu.edu/~jversoza/ait-final/my-form</code>
-    * if you put in a number that's greater than 5, an error message will appear in the dom
-* (5 points) vue.js
-    * used vue.js as the frontend framework; it's a challenging library to learn, so I've assigned it 5 points
+* (3 points) Perform client side form validation using a JavaScript library
+    * There are various elements in a form that are required when creating an event. Will use client side form validation to handle it.
+* (1 point) Implement qrcode module for server side functions
+    * will generate a QR code image for every ticket created (associated with the ticket ID)
+* (1 point) Implement Google Maps API
+    * can embed a Google Maps UI on the event details page and ticket page
 
 10 points total out of 8 required points
 
@@ -145,5 +143,6 @@ An Example Ticket:
 ## Annotations / References Used
 
 1. [passport.js authentication docs](http://passportjs.org/docs) - (add link to source code that was based on this)
-2. [tutorial on vue.js](https://vuejs.org/v2/guide/) - (add link to source code that was based on this)
+2. [tutorial on qrcode](http://thecodebarbarian.com/creating-qr-codes-with-node-js.html) - (add link to source code that was based on this)
+3. [google maps docs](https://developers.google.com/maps/documentation/embed) - (add link to source code that was based on this)
 
