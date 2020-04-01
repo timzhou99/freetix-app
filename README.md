@@ -2,8 +2,6 @@
 
 ## Overview
 
-(___TODO__: a brief one or two paragraph, high-level description of your project_)
-
 Tired of paying fees when buying tickets for your favorite concert or event? Look no further because FreeTix is here for you.
 
 FreeTix is a commission free event management and ticketing web app that is designed for both event planners and event go-ers that allow users to plan events, sell and buy tickets, as well as search for events in their cities. Each user (through registration and login authentication) is able to manage their own events and view all the tickets that they have purchased.
@@ -11,40 +9,59 @@ FreeTix is a commission free event management and ticketing web app that is desi
 
 ## Data Model
 
-(___TODO__: a description of your application's data and their relationships to each other_) 
-
 The application will store Users, Events, and Tickets
 
 * users can manage multiple events (each event tagged to the user by a reference)
 * each event can have multiple tickets (each ticket tagged to an event by a reference)
 * users can have multiple tickets (each ticket is tagged to a user by a reference)
 
-(___TODO__: sample documents_)
-
 An Example User:
 
 ```javascript
 {
-  username: "shannonshopper",
+  username: "timzhou99",
   hash: // a password hash,
-  lists: // an array of references to List documents
+  events: // an array of references to Event documents
+  tickets: //an array of references to Ticket documents
 }
 ```
 
-An Example List with Embedded Items:
+An Example Event with a List of Ticket IDs:
 
 ```javascript
 {
-  user: // a reference to a User object
-  name: "Breakfast foods",
-  items: [
-    { name: "pancakes", quantity: "9876", checked: false},
-    { name: "ramen", quantity: "2", checked: true},
+  manager: // a reference to a User object
+  eventName: "Travis Scott Concert",
+  eventID: "UNIQUE KEY",
+  eventDate: //DateObject
+  eventTimeStart: //time the event starts
+  eventTimeEnd: //time the event ends
+  eventAddress: "40 W 4th Street",
+  eventCity: "New York",
+  eventState: "New York",
+  eventDescription: "The best event of the month!",
+  maxParticipants: 500,
+  currentParticipants: 346,
+  tickets: [
+    { ticketID: "UNIQUE KEY", ticketType: "General Admission", ticketValue: 150.00},
+    { ticketID: "UNIQUE KEY", ticketType: "VIP Admission", ticketValue: 350.00},
   ],
   createdAt: // timestamp
 }
 ```
 
+An Example Ticket:
+
+```javascript
+{
+  ticketHolder: // a reference to a User object
+  eventID: "UNIQUE KEY",
+  ticketType: "General Admission",
+  ticketValue: 150.00,
+  paymentStatus: "Refunded",
+  createdAt: // timestamp
+}
+```
 
 ## [Link to Commented First Draft Schema](db.js) 
 
