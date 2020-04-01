@@ -38,6 +38,7 @@ An Example Event with a List of Ticket IDs:
   
   eventName: "Travis Scott Concert",
   eventDescription: "The best event of the month!",
+  eventPicture: "link.to.image.com",
   eventActive: true,
   
   eventDate: //DateObject
