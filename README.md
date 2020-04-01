@@ -80,8 +80,6 @@ An Example Ticket:
 
 ## Wireframes
 
-(___TODO__: wireframes for all of the pages on your site; they can be as simple as photos of drawings or you can use a tool like Balsamiq, Omnigraffle, etc._)
-
 /events/create - page for creating a new event
 
 ![events_create](documentation/events-create.PNG)
