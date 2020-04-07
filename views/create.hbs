@@ -1,0 +1,39 @@
+<h1>Create an Event</h1>
+
+<div class="create">
+    <form method="POST" action="/events/create">
+        <label for="eventName">Event Name</label>
+        <span><input type="text" id="eventName" name="eventName"></span>
+
+        <label for="eventDescription">Event Description</label>
+        <span><textarea id="eventDescription" name="eventDescription"></textarea></span>
+
+        <label for="eventIMG">Event Image URL</label>
+        <span><input type="text" id="eventIMG" name="eventIMG" placeholder="https://"></span>
+
+        <label for="eventStart">Event Start</label>
+        <span><input type="datetime-local" id="eventStart" name="eventStart"></span>
+
+        <label for="eventEnd">Event End</label>
+        <span><input type="datetime-local" id="eventEnd" name="eventEnd"></span>
+
+        <br> <br>
+
+        <label for="eventAddress">Address</label>
+        <span><input type="text" id="eventAddress" name="eventAddress"></span>
+
+        <label for="eventCity">City</label>
+        <span><input type="text" id="eventCity" name="eventCity"></span>
+
+        <label for="eventState">State</label>
+        <span><input type="text" id="eventState" name="eventState"></span>
+
+        <br> <br>
+
+        <label for="eventQuantity">Ticket Quantity</label>
+        <span><input type="number" id="eventQuantity" name="eventQuantity" placeholder="1"></span>
+
+        <input type="submit" value="Submit" style="float: right">
+    </form>
+</div>
+
