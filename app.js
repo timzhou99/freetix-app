@@ -1,122 +1,62 @@
-require('./db');
-
 const express = require('express');
 const path = require('path');
-const bodyParser = require('body-parser');
-
-const flash = require('express-session');
-const passport = require('passport');
-const bcrypt = require('bcrypt');
+const expressLayouts = require('express-ejs-layouts');
 const mongoose = require('mongoose');
-
-const qrcode = require('qrcode');
+const flash = require('connect-flash');
+const session = require('express-session');
+const passport = require('passport');
 
 const app = express();
 
-const User = mongoose.model('User');
-const Event = mongoose.model('Event');
-const Ticket = mongoose.model('Ticket');
+// Passport Config
+require('./config/passport')(passport);
 
-// enable sessions
-const session = require('express-session');
-const sessionOptions = {
-    secret: 'secret cookie thang (store this elsewhere!)',
-    resave: false,
-    saveUninitialized: false
-};
-app.use(session(sessionOptions));
+// DB Config
+const db = require('./config/keys').MongoURI;
 
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'hbs');
+// Connect to MongoDB
+mongoose.connect(db, { useNewUrlParser: true, useUnifiedTopology : true})
+    .then(() => console.log('MongoDB Connected...'))
+    .catch(err => console.log(err));
 
-// body parser setup
-app.use(bodyParser.urlencoded({ extended: false }));
+// EJS
+app.use(expressLayouts);
+app.set('view engine', 'ejs');
 
-// serve static files
+// Bodyparser
+app.use(express.urlencoded({ extended: false }));
+
+// Express Session
+app.use(session({
+    secret: 'keyboard cat',
+    resave: true,
+    saveUninitialized: true,
+}));
+
+// Passport Middleware
+app.use(passport.initialize());
+app.use(passport.session());
+
+// Connect Flash
+app.use(flash());
+
+// Global Variables
+app.use((req, res, next) => {
+   res.locals.success_msg = req.flash('success_msg');
+   res.locals.error_msg = req.flash('error_msg');
+   res.locals.error = req.flash('error');
+   next();
+});
+
+// Serve Static Files
 app.use(express.static(path.join(__dirname, 'public')));
 
-//authentication routes
+// Routes
+app.use('/', require('./routes/index'));
+app.use('/users', require('./routes/users'));
+app.use('/events', require('./routes/events'));
+app.use('/tickets', require('./routes/tickets'));
 
-app.get('/', (req, res) => {
-    res.redirect('/login');
-});
+const PORT = process.env.PORT || 3000;
 
-app.get('/login', (req, res) => {
-    res.render('login');
-});
-
-app.post('/login', (req, res) => {
-    res.render('login');
-});
-
-app.get('/register', (req, res) => {
-    res.render('register');
-});
-
-app.post('/register', async (req, res) => {
-
-    try {
-        const hashedPassword = await bcrypt.hash(req.body.password, 10);
-
-        new User({
-            username: req.body.username,
-            password: hashedPassword,
-            firstName: req.body.firstName,
-            lastName: req.body.lastName,
-            userCity: req.body.city,
-            userState: req.body.state
-        }).save(function(err){
-
-            if (err) {
-                console.error(err);
-                return;
-            }
-
-            res.redirect('/login');
-
-        });
-
-    } catch {
-        res.redirect('/register');
-    }
-
-});
-
-//routes
-
-app.get('/events', (req, res) => {
-    res.render('events');
-});
-
-app.get('/events/create', (req, res) => {
-    res.render('create');
-});
-
-app.post('/events/create', (req, res) => {
-
-    res.redirect('/events/hosting')
-});
-
-app.get('/events/hosting', (req, res) => {
-    res.render('hosting');
-});
-
-app.get('/events/:eventID', (req, res) => {
-    res.render('event');
-});
-
-app.get('/events/:eventID/manage', (req, res) => {
-    res.render('manage');
-});
-
-app.get('/tickets', (req, res) => {
-    res.render('tickets');
-});
-
-app.get('/tickets/:ticketID', (req, res) => {
-    res.render('manage');
-});
-
-app.listen(3000);
-console.log("server started on localhost:3000");
+app.listen(PORT, console.log(`Server started on port ${PORT}`));

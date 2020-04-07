@@ -1,0 +1,28 @@
+<h1>Register an Account</h1>
+
+<div class="auth">
+
+    <form method="POST" action="/users/register">
+
+        <%- include('partials/messages'); %>
+
+        <label for="name">Name</label>
+        <span><input type="text" id="name" name="name" value="<%= typeof name != 'undefined' ? name : '' %>"></span>
+
+        <label for="email">Email</label>
+        <span><input type="text" id="email" name="email" value="<%= typeof email != 'undefined' ? email : '' %>"></span>
+
+        <label for="password">Password</label>
+        <span><input type="password" id="password" name="password" ></span>
+
+        <br> <br>
+
+        <label for="city">City</label>
+        <span><input type="text" id="city" name="city" value="<%= typeof city != 'undefined' ? city : '' %>"></span>
+
+        <label for="state">State</label>
+        <span><input type="text" id="state" name="state" value="<%= typeof state != 'undefined' ? state : '' %>"></span>
+
+        <input type="submit" value="Register" style="float: right">
+    </form>
+</div>
