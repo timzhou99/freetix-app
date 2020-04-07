@@ -19,14 +19,18 @@ An Example User:
 
 ```javascript
 {
-  username: "timzhou99",
-  hash: // a password hash,
+  email: "tim@gmail.com",
+  password: // a password hash,
+  
+  name: "Timothy Zhou",
   
   events: // an array of references to Event documents
   tickets: //an array of references to Ticket documents
   
   userCity: "New York",
   userState: "New York"
+  
+  _id: //MongoDB generated ID
 }
 ```
 
@@ -55,7 +59,7 @@ An Example Event with a List of Ticket IDs:
     { ticketID: "UNIQUE KEY", ticketType: "VIP Admission", ticketValue: 350.00},
   ],
   
-  eventID: "UNIQUE KEY"
+  _id: //MongoDB generated ID
 }
 ```
 
@@ -64,14 +68,13 @@ An Example Ticket:
 ```javascript
 {
   ticketHolder: // a reference to a User object
-  eventID: "UNIQUE KEY",
+  eventID: "key that references the ticket to an Event",
   
   ticketType: "General Admission",
   ticketValue: 150.00,
   ticketStatus: "Cancelled",
-  
-  createdAt: // timestamp
-  ticketID: "UNIQUE KEY"
+
+  _id: //MongoDB generated ID
 }
 ```
 
@@ -145,7 +148,7 @@ An Example Ticket:
 
 ## Annotations / References Used
 
-1. [passport.js authentication docs](http://passportjs.org/docs) - (add link to source code that was based on this)
+1. [passport.js authentication docs](http://passportjs.org/docs) - (https://www.youtube.com/watch?v=6FOq4cUdH8k)
 2. [tutorial on qrcode](http://thecodebarbarian.com/creating-qr-codes-with-node-js.html) - (add link to source code that was based on this)
 3. [google maps docs](https://developers.google.com/maps/documentation/embed) - (add link to source code that was based on this)
 
