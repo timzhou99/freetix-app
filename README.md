@@ -41,9 +41,8 @@ An Example Event with a List of Ticket IDs:
   eventPicture: "link.to.image.com",
   eventActive: true,
   
-  eventDate: //DateObject
-  eventTimeStart: //time the event starts
-  eventTimeEnd: //time the event ends
+  eventStart: //datetime the event starts
+  eventEnd: //datetime the event ends
   
   eventAddress: "40 W 4th Street",
   eventCity: "New York",
