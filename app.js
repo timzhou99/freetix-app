@@ -12,7 +12,17 @@ const app = express();
 require('./config/passport')(passport);
 
 // DB Config
-const db = require('./config/keys').MongoURI;
+let db;
+
+// is the environment variable, NODE_ENV, set to PRODUCTION?
+if (process.env.NODE_ENV === 'PRODUCTION') {
+    // if we're in PRODUCTION mode, then read the configration from a file
+    // use blocking file io to do this...
+    db = require('./config/keys').MongoURI;
+} else {
+    // if we're not in PRODUCTION mode, then use
+    db = 'mongodb://localhost/freetix';
+}
 
 // Connect to MongoDB
 mongoose.connect(db, { useNewUrlParser: true, useUnifiedTopology : true})
