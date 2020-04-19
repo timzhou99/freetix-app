@@ -618,6 +618,7 @@
 
 			.image.fit img {
 				width: 100%;
+				object-fit: contain;
 			}
 
 		.image.main {
@@ -1264,4 +1265,3 @@ h1 {
 .closebtn:hover {
 	color: black;
 }
-

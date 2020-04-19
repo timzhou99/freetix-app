@@ -1,0 +1,51 @@
+<h1>Manage Event</h1>
+
+<div class="create">
+
+    <% if (eventObj === undefined) { %>
+        <h3 style="text-align: center">No Events to Manage</h3>
+    <% } else { %>
+
+        <form method="POST" action="/events/<%= eventObj._id %>/manage">
+            <label for="eventName">Event Name</label>
+            <span><input type="text" id="eventName" name="eventName" value="<%= eventObj.eventName %>"></span>
+
+            <label for="eventDescription">Event Description</label>
+            <span><textarea id="eventDescription" name="eventDescription"><%= eventObj.eventDescription %></textarea></span>
+
+            <label for="eventIMG">Event Image URL</label>
+            <span><input type="text" id="eventIMG" name="eventIMG" placeholder="https://" value="<%= eventObj.eventPicture %>"></span>
+
+            <label for="eventStart">Event Start</label>
+            <span><input type="datetime-local" id="eventStart" name="eventStart" value="<%= toISOFormat(eventObj.eventStart) %>"></span>
+
+            <label for="eventEnd">Event End</label>
+            <span><input type="datetime-local" id="eventEnd" name="eventEnd" value="<%= toISOFormat(eventObj.eventEnd) %>"></span>
+
+            <br> <br>
+
+            <label for="eventAddress">Address</label>
+            <span><input type="text" id="eventAddress" name="eventAddress" value="<%= eventObj.eventAddress %>"></span>
+
+            <label for="eventCity">City</label>
+            <span><input type="text" id="eventCity" name="eventCity" value="<%= eventObj.eventCity %>"></span>
+
+            <label for="eventState">State</label>
+            <span><input type="text" id="eventState" name="eventState" value="<%= eventObj.eventState %>"></span>
+
+            <br> <br>
+
+            <label for="eventQuantity">Ticket Quantity</label>
+            <span><input type="number" id="eventQuantity" name="eventQuantity" placeholder="1" value="<%= eventObj.maxQuantity %>"></span>
+
+            <label for="ticketPrice">Ticket Price</label>
+            <span><input type="number" placeholder="$0.00" step="0.01" id="ticketPrice" name="ticketPrice" value="<%= eventObj.ticketPrice %>"></span>
+
+            <input type="button" value="Discard Changes" style="float: left" onclick="window.location.href = '/events/hosting';">
+            <input type="submit" value="Update Event" style="float: right">
+        </form>
+
+    <% } %>
+
+</div>
+

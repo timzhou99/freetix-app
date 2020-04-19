@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { ensureAuthenticated } = require('../config/auth');
 
-//User Model
+//Event Model
 const Event = require('../models/Event');
 
 //View All Events (in the user's area)
@@ -63,7 +63,36 @@ router.get('/:eventID', ensureAuthenticated, (req, res) => {
 
 //Manage an Event Page
 router.get('/:eventID/manage', ensureAuthenticated, (req, res) => {
-    //res.render('manage');
+    Event.findOne({_id:req.params.eventID}, function(err, eventObj) {
+        res.render('manage', {eventObj});
+    });
 });
+
+router.post('/:eventID/manage', ensureAuthenticated, (req, res) => {
+
+    const { eventName, eventDescription, eventIMG, eventStart, eventEnd, eventAddress, eventCity, eventState, eventQuantity, ticketPrice} = req.body;
+
+    const updatedEvent = {
+        eventName,
+        eventDescription,
+        eventPicture: eventIMG,
+        eventStart,
+        eventEnd,
+        eventAddress,
+        eventCity,
+        eventState,
+        maxQuantity: eventQuantity,
+        ticketPrice,
+    };
+
+    Event.updateOne({_id:req.params.eventID}, updatedEvent, function(err, response){
+        if (err) throw err;
+
+        req.flash('success_msg', 'Successfully modified the event!');
+        res.redirect('/events/hosting');
+    });
+
+});
+
 
 module.exports = router;
