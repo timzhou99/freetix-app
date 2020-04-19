@@ -22,6 +22,7 @@ const EventSchema = new mongoose.Schema({
     eventState: {type: String, required: true},
 
     maxQuantity: {type: Number, required: true},
+    ticketPrice: {type: Number, required: true},
     currentQuantity: {type: Number, required: true},
     tickets: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Ticket' }]
 }, {

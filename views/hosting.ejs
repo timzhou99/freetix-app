@@ -1,1 +1,24 @@
 <h1>My Events</h1> <br>
+
+<%- include('partials/messages'); %>
+
+<div class="thumbnails">
+
+    <% if (events.length === 0) { %>
+        <h3>No Events to Display</h3>
+    <% } %>
+
+    <% for (var i = 0; i < events.length; i++) { %>
+
+        <div class="box">
+            <a href="/events/<%= events[i]._id %>" class="image fit"><img src="<%= events[i].eventPicture %>" alt="" /></a>
+            <div class="inner">
+                <h3><%= events[i].eventName %></h3>
+                <p><%= formatDateTime(events[i].eventStart) %></p>
+                <a href="/events/<%= events[i]._id %>" class="button fit">Manage</a>
+            </div>
+        </div>
+
+    <% } %>
+
+</div>

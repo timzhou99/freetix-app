@@ -1,0 +1,39 @@
+<%
+
+formatDateTime = function(date) {
+
+    let toReturn = '';
+
+    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'];
+    const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
+
+    toReturn += days[date.getDay()] + ', ' + months[date.getMonth()] + ' ' + date.getDate() + ', ';
+
+    let amPm;
+    let hours;
+    let minutes;
+
+    if (date.getHours() > 12){
+        amPm = 'PM';
+        hours = date.getHours() - 12;
+    } else if (date.getHours() === 12){
+        amPm = 'PM';
+        hours = date.getHours();
+    } else{
+        amPm = 'AM';
+        hours = date.getHours();
+    }
+
+    if (date.getMinutes().toString().length === 1){
+        minutes = '0' + date.getMinutes();
+    } else {
+        minutes = date.getMinutes();
+    }
+
+    toReturn += hours + ':' + minutes + " " + amPm;
+
+    return toReturn;
+
+}
+
+%>

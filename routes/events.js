@@ -2,6 +2,9 @@ const express = require('express');
 const router = express.Router();
 const { ensureAuthenticated } = require('../config/auth');
 
+//User Model
+const Event = require('../models/Event');
+
 //View All Events (in the user's area)
 router.get('/', ensureAuthenticated, (req, res) => {
     res.render('events');
@@ -9,12 +12,44 @@ router.get('/', ensureAuthenticated, (req, res) => {
 
 //View Events User is Hosting
 router.get('/hosting', ensureAuthenticated, (req, res) => {
-    res.render('hosting');
+
+    Event.find({eventManager:req.user._id}, function(err, events, count) {
+        res.render('hosting', {events});
+    });
+
 });
 
 //Create an Event Page
 router.get('/create', ensureAuthenticated, (req, res) => {
     res.render('create');
+});
+
+router.post('/create', ensureAuthenticated, (req, res) => {
+
+    const { eventName, eventDescription, eventIMG, eventStart, eventEnd, eventAddress, eventCity, eventState, eventQuantity, ticketPrice} = req.body;
+
+    const newEvent = new Event({
+        eventManager: req.user._id,
+        eventName,
+        eventDescription,
+        eventPicture: eventIMG,
+        eventStart,
+        eventEnd,
+        eventAddress,
+        eventCity,
+        eventState,
+        maxQuantity: eventQuantity,
+        ticketPrice,
+        currentQuantity: 0
+    });
+
+    newEvent.save()
+        .then(event => {
+            req.flash('success_msg', 'Successfully created an event!');
+            res.redirect('/hosting');
+        })
+        .catch(err => console.log(err));
+
 });
 
 //View Event Details Page
