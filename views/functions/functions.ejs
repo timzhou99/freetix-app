@@ -30,6 +30,10 @@ formatDateTime = function(date) {
         minutes = date.getMinutes();
     }
 
+    if (hours.toString().length === 1){
+        hours = '0' + hours;
+    }
+
     toReturn += hours + ':' + minutes + " " + amPm;
 
     return toReturn;

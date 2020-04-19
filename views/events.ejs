@@ -1,4 +1,4 @@
-<h1>Events in New York, New York</h1> <br>
+<h1>Events in <%= state %></h1> <br>
 
 <div class="thumbnails">
 
@@ -13,7 +13,7 @@
             <div class="inner">
                 <h3><%= events[i].eventName %></h3>
                 <p><%= formatDateTime(events[i].eventStart) %></p>
-                <a href="/events/<%= events[i]._id %>" class="button fit">Manage</a>
+                <a href="/events/<%= events[i]._id %>" class="button fit">View Details</a>
             </div>
         </div>
 

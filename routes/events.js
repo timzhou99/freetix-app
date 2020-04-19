@@ -7,8 +7,12 @@ const Event = require('../models/Event');
 
 //View All Events (in the user's area)
 router.get('/', ensureAuthenticated, (req, res) => {
-    res.render('events');
-})
+
+    Event.find({eventState:req.user.userState}, function(err, events, count) {
+        res.render('events', {events, state:req.user.userState});
+    });
+
+});
 
 //View Events User is Hosting
 router.get('/hosting', ensureAuthenticated, (req, res) => {
@@ -46,7 +50,7 @@ router.post('/create', ensureAuthenticated, (req, res) => {
     newEvent.save()
         .then(event => {
             req.flash('success_msg', 'Successfully created an event!');
-            res.redirect('/hosting');
+            res.redirect('/events/hosting');
         })
         .catch(err => console.log(err));
 
