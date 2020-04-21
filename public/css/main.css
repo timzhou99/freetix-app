@@ -1265,3 +1265,7 @@ h1 {
 .closebtn:hover {
 	color: black;
 }
+
+option {
+	background: #2c2c32;
+}

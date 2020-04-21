@@ -85,6 +85,8 @@ router.post('/:eventID/manage', ensureAuthenticated, (req, res) => {
         ticketPrice,
     };
 
+    console.log(updatedEvent);
+
     Event.updateOne({_id:req.params.eventID}, updatedEvent, function(err, response){
         if (err) throw err;
 
