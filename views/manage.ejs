@@ -2,8 +2,8 @@
 
 <div class="create">
 
-	<% if (eventObj === undefined) { %>
-		<h3 style="text-align: center">No Events to Manage</h3>
+	<% if (typeof eventObj == 'undefined') { %>
+		<h3 style="text-align: center">Invalid Permissions.</h3>
 	<% } else { %>
 
 		<form method="POST" action="/events/<%= eventObj._id %>/manage">

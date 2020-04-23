@@ -25,7 +25,7 @@ if (process.env.NODE_ENV === 'PRODUCTION') {
 }
 
 // Connect to MongoDB
-mongoose.connect(db, { useNewUrlParser: true, useUnifiedTopology : true})
+mongoose.connect(db, { useNewUrlParser: true, useUnifiedTopology : true, useFindAndModify: false})
     .then(() => console.log('MongoDB Connected...'))
     .catch(err => console.log(err));
 

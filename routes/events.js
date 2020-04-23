@@ -5,6 +5,9 @@ const { ensureAuthenticated } = require('../config/auth');
 //Event Model
 const Event = require('../models/Event');
 
+//User Model
+const User = require('../models/User');
+
 //View All Events (in the user's area)
 router.get('/', ensureAuthenticated, (req, res) => {
 
@@ -49,6 +52,11 @@ router.post('/create', ensureAuthenticated, (req, res) => {
 
     newEvent.save()
         .then(event => {
+
+            User.findOneAndUpdate({_id:req.user._id}, {$push: {events:newEvent}}, function(err,success){
+                if (err) throw err;
+            });
+
             req.flash('success_msg', 'Successfully created an event!');
             res.redirect('/events/hosting');
         })
@@ -63,9 +71,19 @@ router.get('/:eventID', ensureAuthenticated, (req, res) => {
 
 //Manage an Event Page
 router.get('/:eventID/manage', ensureAuthenticated, (req, res) => {
-    Event.findOne({_id:req.params.eventID}, function(err, eventObj) {
-        res.render('manage', {eventObj});
+
+    const found = req.user.events.find(ele => {
+        return ele.toString() === req.params.eventID;
     });
+
+    if (found === undefined)
+        res.render('manage');
+    else {
+        Event.findOne({_id:req.params.eventID}, function(err, eventObj) {
+            res.render('manage', {eventObj});
+        });
+    }
+
 });
 
 router.post('/:eventID/manage', ensureAuthenticated, (req, res) => {
