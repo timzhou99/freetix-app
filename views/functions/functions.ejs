@@ -48,4 +48,17 @@ getLocalDate = function(value){
     return date.substring(0, 16)
 }
 
+getValidTickets = function(arrOfTickets) {
+
+    let counter = 0;
+
+    arrOfTickets.forEach(ele => {
+        if (ele.ticketStatus)
+            counter++;
+    })
+
+    return counter;
+
+}
+
 %>

@@ -86,14 +86,12 @@ router.post('/create', ensureAuthenticated, (req, res) => {
 //View Event Details Page
 router.get('/:eventID', ensureAuthenticated, (req, res) => {
 
-    Event.findOne({_id:req.params.eventID}, function(err, eventObj) {
-
-        User.findOne({_id:eventObj.eventManager}, function(err, user){
-            res.render('event', {eventObj, manager:user.name});
+    Event.findOne({_id:req.params.eventID})
+        .populate('tickets').exec((err, populatedEvent) => {
+            User.findOne({_id:populatedEvent.eventManager}, function(err, user){
+                res.render('event', {eventObj:populatedEvent, manager:user.name});
+            });
         });
-
-
-    });
 
 });
 

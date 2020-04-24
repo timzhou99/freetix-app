@@ -20,7 +20,7 @@
         <div class="column left" style="height: 80px; background-color: #2c2c32;">
         </div>
         <div class="column right" style="height: 80px; background-color: #2c2c32; padding-right:20px;">
-            <% if (eventObj.tickets.length >= eventObj.maxQuantity) { %>
+            <% if (getValidTickets(eventObj.tickets) >= eventObj.maxQuantity) { %>
                 <input type="submit" value="Sold Out" style="float: right;" disabled>
             <% } else { %>
                 <form method="POST" action="/events/<%= eventObj._id %>/purchase">

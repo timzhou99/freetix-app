@@ -18,48 +18,83 @@ router.get('/', ensureAuthenticated, (req, res) => {
 
     User.findOne({_id:req.user._id})
         .populate('tickets').exec((err, results) => {
-            Ticket.find({})
-                .populate('event').exec((err, populatedTickets) => {
+        Ticket.find({})
+            .populate('event').exec((err, populatedTickets) => {
 
-                    let filteredTickets;
+            let filteredTickets;
 
-                    if (req.query.search === '' || req.query.search === undefined){
-                        filteredTickets = populatedTickets.filter(ele => {
-                            return ele.event.eventEnd > Date.now();
-                        });
-                    } else {
-                        filteredTickets = populatedTickets.filter(ele => {
-                            return ele.event.eventEnd > Date.now() && ele.event.eventName.toLowerCase().includes(req.query.search.toLowerCase());
-                        });
-                    }
+            if (req.query.search === '' || req.query.search === undefined){
+                filteredTickets = populatedTickets.filter(ele => {
+                    return ele.event.eventEnd > Date.now();
+                });
+            } else {
+                filteredTickets = populatedTickets.filter(ele => {
+                    return ele.event.eventEnd > Date.now() && ele.event.eventName.toLowerCase().includes(req.query.search.toLowerCase());
+                });
+            }
 
-                    filteredTickets.sort((a,b) => {
-                        return a.event.eventStart-b.event.eventStart;
-                    });
-
-                    res.render('tickets', {tickets: filteredTickets});
+            filteredTickets.sort((a,b) => {
+                return a.event.eventStart-b.event.eventStart;
             });
+
+            res.render('tickets', {tickets: filteredTickets});
         });
+    });
 
 });
 
 //View the Details of a Ticket
 router.get('/:ticketID', ensureAuthenticated, (req, res) => {
 
-    Ticket.findOne({_id:req.params.ticketID})
-        .populate('event').exec((err, populatedTicket) => {
+    const found = req.user.tickets.find(ele => {
+        return ele._id.toString() === req.params.ticketID;
+    });
+
+    if (found === undefined) {
+        req.flash('error_msg', 'User does not have access to this ticket.');
+        res.redirect('/tickets');
+    } else {
+        Ticket.findOne({_id:req.params.ticketID})
+            .populate('event').exec((err, populatedTicket) => {
             QRCode.toDataURL(populatedTicket._id.toString(), function(err, url){
-                console.log(url);
                 res.render('ticket', {ticket: populatedTicket, holder: req.user.name, qrcode:url});
             });
 
         });
+    }
 
 });
 
 //Cancel a Ticket
 router.post('/:ticketID/cancel', ensureAuthenticated, (req, res) => {
-    res.render('ticket');
+
+    const found = req.user.tickets.find(ele => {
+        return ele._id.toString() === req.params.ticketID;
+    });
+
+    if (found === undefined){
+        req.flash('error_msg', 'User does not have access to this ticket.');
+        res.redirect('/tickets/' + req.params.ticketID);
+    } else {
+        Ticket.findOne({_id:req.params.ticketID})
+            .populate('event').exec((err, populatedTicket) => {
+                if (!populatedTicket.ticketStatus) {
+                    req.flash('error_msg', 'Ticket has already been cancelled.');
+                    res.redirect('/tickets/' + req.params.ticketID);
+                } else {
+
+                    Ticket.findOneAndUpdate({_id:req.params.ticketID}, {ticketStatus:false}, (err,ticket) =>{
+
+                        req.flash('success_msg', 'Successfully cancelled the ticket!');
+                        res.redirect('/tickets/' + req.params.ticketID);
+
+                    });
+                }
+            });
+    }
+
+
+
 });
 
 
