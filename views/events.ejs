@@ -1,5 +1,15 @@
 <h1>Events in <%= state %></h1> <br>
 
+
+<div>
+    <form method="GET" action="/events">
+        <input type="text" name="search" placeholder="What are you looking for?" style="display: inline; width:50%; margin-left:20%;">
+        <input type="submit" value="Search">
+    </form>
+</div>
+
+<br> <br>
+
 <div class="thumbnails">
 
     <% if (events.length === 0) { %>

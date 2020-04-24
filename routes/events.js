@@ -13,8 +13,20 @@ router.get('/', ensureAuthenticated, (req, res) => {
 
     Event.find({eventState:req.user.userState}, function(err, events, count) {
 
-        const filteredEvents = events.filter(ele => {
-            return ele.eventEnd > Date.now();
+        let filteredEvents;
+
+        if (req.query.search === '' || req.query.search === undefined){
+            filteredEvents = events.filter(ele => {
+                return ele.eventEnd > Date.now();
+            });
+        } else {
+            filteredEvents = events.filter(ele => {
+                return ele.eventEnd > Date.now() && ele.eventName.toLowerCase().includes(req.query.search.toLowerCase());
+            });
+        }
+
+        filteredEvents.sort((a,b) => {
+            return a.eventStart-b.eventStart;
         });
 
         res.render('events', {events:filteredEvents, state:req.user.userState});
@@ -73,7 +85,12 @@ router.post('/create', ensureAuthenticated, (req, res) => {
 router.get('/:eventID', ensureAuthenticated, (req, res) => {
 
     Event.findOne({_id:req.params.eventID}, function(err, eventObj) {
-        res.render('event', {eventObj, manager:req.user.name});
+
+        User.findOne({_id:eventObj.eventManager}, function(err, user){
+            res.render('event', {eventObj, manager:user.name});
+        });
+
+
     });
 
 });
