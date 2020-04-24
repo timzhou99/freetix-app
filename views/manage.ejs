@@ -95,6 +95,7 @@
 			<span><input type="number" placeholder="$0.00" step="0.01" id="ticketPrice" name="ticketPrice" value="<%= eventObj.ticketPrice %>"></span>
 
 			<input type="button" value="Discard Changes" style="float: left" onclick="window.location.href = '/events/hosting';">
+            <input type="button" value="Delete Event" style="float: left; margin-left: 20px;" onclick="window.location.href = '/events/<%= eventObj._id%>/delete';">
 			<input type="submit" value="Update Event" style="float: right">
 		</form>
 

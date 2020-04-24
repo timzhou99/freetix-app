@@ -12,7 +12,12 @@ const User = require('../models/User');
 router.get('/', ensureAuthenticated, (req, res) => {
 
     Event.find({eventState:req.user.userState}, function(err, events, count) {
-        res.render('events', {events, state:req.user.userState});
+
+        const filteredEvents = events.filter(ele => {
+            return ele.eventEnd > Date.now();
+        });
+
+        res.render('events', {events:filteredEvents, state:req.user.userState});
     });
 
 });
@@ -66,7 +71,11 @@ router.post('/create', ensureAuthenticated, (req, res) => {
 
 //View Event Details Page
 router.get('/:eventID', ensureAuthenticated, (req, res) => {
-    //res.render('event');
+
+    Event.findOne({_id:req.params.eventID}, function(err, eventObj) {
+        res.render('event', {eventObj, manager:req.user.name});
+    });
+
 });
 
 //Manage an Event Page
@@ -109,6 +118,39 @@ router.post('/:eventID/manage', ensureAuthenticated, (req, res) => {
         req.flash('success_msg', 'Successfully modified the event!');
         res.redirect('/events/hosting');
     });
+
+});
+
+router.post('/:eventID/purchase', ensureAuthenticated, (req, res) => {
+
+    Event.findOne({_id:req.params.eventID}, function(err, eventObj) {
+        if (err) throw err;
+
+        if (!eventObj){
+
+        } else {
+            res.redirect('/tickets');
+        }
+
+        res.render('manage', {eventObj});
+    });
+
+});
+
+router.get('/:eventID/delete', ensureAuthenticated, (req, res) => {
+
+    const found = req.user.events.find(ele => {
+        return ele.toString() === req.params.eventID;
+    });
+
+    if (found === undefined)
+        res.render('manage');
+    else {
+        Event.deleteOne({_id:req.params.eventID}, function(err) {
+            req.flash('success_msg', 'Successfully deleted the event!');
+            res.redirect('/events/hosting')
+        });
+    }
 
 });
 

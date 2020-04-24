@@ -1269,3 +1269,46 @@ h1 {
 option {
 	background: #2c2c32;
 }
+
+.fill {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	overflow: hidden
+}
+.fill img {
+	flex-shrink: 0;
+	min-width: 100%;
+	min-height: 100%
+}
+
+.column {
+	float:left;
+	flex-direction: column;
+	padding-top: 25px;
+	padding-left: 25px;
+}
+
+.left {
+	width: 70%;
+}
+
+.right {
+	width: 30%;
+}
+
+.right span {
+	position: absolute;
+	bottom: 0;
+	left: 25px;
+}
+
+.row:after {
+	content: "";
+	display: table;
+	clear: both;
+}
+
+.row {
+	display: flex;
+}
