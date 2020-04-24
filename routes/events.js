@@ -8,6 +8,9 @@ const Event = require('../models/Event');
 //User Model
 const User = require('../models/User');
 
+//Ticket Model
+const Ticket = require('../models/Ticket');
+
 //View All Events (in the user's area)
 router.get('/', ensureAuthenticated, (req, res) => {
 
@@ -63,8 +66,7 @@ router.post('/create', ensureAuthenticated, (req, res) => {
         eventCity,
         eventState,
         maxQuantity: eventQuantity,
-        ticketPrice,
-        currentQuantity: 0
+        ticketPrice
     });
 
     newEvent.save()
@@ -143,13 +145,37 @@ router.post('/:eventID/purchase', ensureAuthenticated, (req, res) => {
     Event.findOne({_id:req.params.eventID}, function(err, eventObj) {
         if (err) throw err;
 
-        if (!eventObj){
+        if (eventObj){
+
+            const newTicket = new Ticket({
+                ticketHolder: req.user._id,
+                event: eventObj,
+                ticketType: 'General Admission',
+                ticketValue: eventObj.ticketPrice,
+                ticketStatus: true,
+            });
+
+            newTicket.save()
+                .then(ticket => {
+
+                    User.findOneAndUpdate({_id:req.user._id}, {$push: {tickets:newTicket}}, function(err,success){
+                        if (err) throw err;
+                    });
+
+                    Event.findOneAndUpdate({_id:eventObj._id}, {$push: {tickets:newTicket}}, function(err,success){
+                        if (err) throw err;
+                    });
+
+                    req.flash('success_msg', 'Successfully purchased a ticket!');
+                    res.redirect('/tickets');
+                })
+                .catch(err => console.log(err));
 
         } else {
-            res.redirect('/tickets');
+            req.flash('error_msg', 'Event does not exist.');
+            res.redirect('/events');
         }
 
-        res.render('manage', {eventObj});
     });
 
 });

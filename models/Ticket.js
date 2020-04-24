@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const EventSchema = require('./Event').schema;
 
 // a ticket
 // * each ticket is tied to an eventID and a User
@@ -7,13 +8,12 @@ const mongoose = require('mongoose');
 const TicketSchema = new mongoose.Schema({
 
     ticketHolder: {type: String, required: true},
-    eventID: {type: String, required: true},
+    event: {type: mongoose.Schema.Types.ObjectID, ref: 'Event', required: true},
 
     ticketType: {type: String, required: true},
-    ticketValue: {type: Number, required: true},
-    ticketStatus: {type: String, required: true},
+    ticketStatus: {type: Boolean, required: true},
 
-    eventDate: {type: Date, required: true}
+    purchaseDate: {type: Date, default: Date.now, required: true}
 
 }, {
     _id: true

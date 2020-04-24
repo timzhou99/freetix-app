@@ -1,1 +1,33 @@
 <h1>My Tickets</h1> <br>
+
+<%- include('partials/messages'); %>
+
+<div>
+    <form method="GET" action="/tickets">
+        <input type="text" name="search" placeholder="What are you looking for?" style="display: inline; width:50%; margin-left:20%;">
+        <input type="submit" value="Search">
+    </form>
+</div>
+
+<br> <br>
+
+<div class="thumbnails">
+
+    <% if (tickets.length === 0) { %>
+        <h3>No Tickets to Display</h3>
+    <% } %>
+
+    <% for (var i = 0; i < tickets.length; i++) { %>
+
+        <div class="box">
+            <a href="/tickets/<%= tickets[i]._id %>" class="image fit"><img src="<%= tickets[i].event.eventPicture %>" alt="" /></a>
+            <div class="inner">
+                <h3><%= tickets[i].event.eventName %></h3>
+                <p><%= formatDateTime(tickets[i].event.eventStart) %></p>
+                <a href="/tickets/<%= tickets[i]._id %>" class="button fit">View Ticket</a>
+            </div>
+        </div>
+
+    <% } %>
+
+</div>

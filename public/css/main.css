@@ -1266,20 +1266,19 @@ h1 {
 	color: black;
 }
 
-option {
-	background: #2c2c32;
-}
 
 .fill {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	overflow: hidden
+	background-size: cover;
+	background-position: center;
+	overflow: hidden;
 }
 .fill img {
-	flex-shrink: 0;
+	object-fit: cover;
 	min-width: 100%;
-	min-height: 100%
+	min-height: 100%;
 }
 
 .column {
