@@ -13,6 +13,7 @@ const User = require('../models/User');
 //Ticket Model
 const Ticket = require('../models/Ticket');
 
+
 //View all the User's Tickets
 router.get('/', ensureAuthenticated, (req, res) => {
 
@@ -92,8 +93,6 @@ router.post('/:ticketID/cancel', ensureAuthenticated, (req, res) => {
                 }
             });
     }
-
-
 
 });
 

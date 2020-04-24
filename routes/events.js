@@ -140,41 +140,54 @@ router.post('/:eventID/manage', ensureAuthenticated, (req, res) => {
 
 router.post('/:eventID/purchase', ensureAuthenticated, (req, res) => {
 
-    Event.findOne({_id:req.params.eventID}, function(err, eventObj) {
-        if (err) throw err;
+    Event.findOne({_id:req.params.eventID})
+        .populate('tickets').exec((err, populatedEvent) => {
+            if (err) throw err;
 
-        if (eventObj){
+            let currentQuantity = 1;
 
-            const newTicket = new Ticket({
-                ticketHolder: req.user._id,
-                event: eventObj,
-                ticketType: 'General Admission',
-                ticketValue: eventObj.ticketPrice,
-                ticketStatus: true,
+            populatedEvent.tickets.forEach(ele => {
+                if (ele.ticketStatus)
+                    currentQuantity++;
             });
 
-            newTicket.save()
-                .then(ticket => {
+            console.log(currentQuantity);
 
-                    User.findOneAndUpdate({_id:req.user._id}, {$push: {tickets:newTicket}}, function(err,success){
-                        if (err) throw err;
-                    });
+            if (populatedEvent && currentQuantity <= populatedEvent.maxQuantity){
 
-                    Event.findOneAndUpdate({_id:eventObj._id}, {$push: {tickets:newTicket}}, function(err,success){
-                        if (err) throw err;
-                    });
+                const newTicket = new Ticket({
+                    ticketHolder: req.user._id,
+                    event: populatedEvent,
+                    ticketType: 'General Admission',
+                    ticketValue: populatedEvent.ticketPrice,
+                    ticketStatus: true,
+                });
 
-                    req.flash('success_msg', 'Successfully purchased a ticket!');
-                    res.redirect('/tickets');
-                })
-                .catch(err => console.log(err));
+                newTicket.save()
+                    .then(ticket => {
 
-        } else {
-            req.flash('error_msg', 'Event does not exist.');
-            res.redirect('/events');
-        }
+                        User.findOneAndUpdate({_id:req.user._id}, {$push: {tickets:newTicket}}, function(err,success){
+                            if (err) throw err;
+                        });
 
-    });
+                        Event.findOneAndUpdate({_id:populatedEvent._id}, {$push: {tickets:newTicket}}, function(err,success){
+                            if (err) throw err;
+                        });
+
+                        req.flash('success_msg', 'Successfully purchased a ticket!');
+                        res.redirect('/tickets');
+                    })
+                    .catch(err => console.log(err));
+
+            } else if (currentQuantity > populatedEvent.maxQuantity){
+                req.flash('error_msg', 'Event has hit max capacity.');
+                res.redirect('/events');
+            } else {
+                req.flash('error_msg', 'Event does not exist.');
+                res.redirect('/events');
+            }
+
+         });
 
 });
 
