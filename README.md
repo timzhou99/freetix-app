@@ -132,17 +132,14 @@ An Example Ticket:
 * (5 points) Integrate user authentication
     * I'm going to be using passport for user authentication
     * It's a middleware for Node.js so it is very flexible to be used in an Express-based web app.
-* (3 points) Perform client side form validation using a JavaScript library
-    * There are various elements in a form that are required when creating an event. 
-    * Will use client side form validation to handle it.
-* (1 point) Implement qrcode module for server side functions
+* (5 points) Automated functional testing for all of my routes 
+    * Will be using Selenium and Python to run all my tests 
+    * Each test run will register and login a user; create, modify, and delete an event; and purchase and cancel a ticket.
+* (2 points) Implement qrcode module for server side functions
     * will generate a QR code image for every ticket created (associated with the ticket ID)
     * this will be helpful in future releases of the web app to "check people into an event"
-* (1 point) Implement Google Maps API
-    * can embed a Google Maps UI on the event details page and ticket page
-    * adding this feature will create value added for the user as he/she would be able to view the location of the event on the map
 
-10 points total out of 8 required points
+12 points total out of 8 required points
 
 ## [Link to Initial Main Project File](app.js) 
 
