@@ -151,8 +151,6 @@ router.post('/:eventID/purchase', ensureAuthenticated, (req, res) => {
                     currentQuantity++;
             });
 
-            console.log(currentQuantity);
-
             if (populatedEvent && currentQuantity <= populatedEvent.maxQuantity){
 
                 const newTicket = new Ticket({
