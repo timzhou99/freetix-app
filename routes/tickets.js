@@ -2,6 +2,11 @@ const express = require('express');
 const router = express.Router();
 const { ensureAuthenticated } = require('../config/auth');
 
+const QRCode = require('qrcode');
+
+//Event Model
+const Event = require('../models/Event');
+
 //User Model
 const User = require('../models/User');
 
@@ -43,13 +48,17 @@ router.get('/:ticketID', ensureAuthenticated, (req, res) => {
 
     Ticket.findOne({_id:req.params.ticketID})
         .populate('event').exec((err, populatedTicket) => {
-            res.render('ticket', {ticket: populatedTicket, holder: req.user.name});
+            QRCode.toDataURL(populatedTicket._id.toString(), function(err, url){
+                console.log(url);
+                res.render('ticket', {ticket: populatedTicket, holder: req.user.name, qrcode:url});
+            });
+
         });
 
 });
 
 //Cancel a Ticket
-router.get('/:ticketID', ensureAuthenticated, (req, res) => {
+router.post('/:ticketID/cancel', ensureAuthenticated, (req, res) => {
     res.render('ticket');
 });
 
