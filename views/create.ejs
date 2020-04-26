@@ -3,27 +3,27 @@
 <div class="create">
     <form method="POST" action="/events/create">
         <label for="eventName">Event Name</label>
-        <span><input type="text" id="eventName" name="eventName"></span>
+        <span><input type="text" id="eventName" name="eventName" required></span>
 
         <label for="eventDescription">Event Description</label>
-        <span><textarea id="eventDescription" name="eventDescription" style="height:200px"></textarea></span>
+        <span><textarea id="eventDescription" name="eventDescription" style="height:200px" required></textarea></span>
 
         <label for="eventIMG">Event Image URL</label>
-        <span><input type="text" id="eventIMG" name="eventIMG" placeholder="https://"></span>
+        <span><input type="text" id="eventIMG" name="eventIMG" placeholder="https://" required></span>
 
         <label for="eventStart">Event Start</label>
-        <span><input type="datetime-local" id="eventStart" name="eventStart"></span>
+        <span><input type="datetime-local" id="eventStart" name="eventStart" required></span>
 
         <label for="eventEnd">Event End</label>
-        <span><input type="datetime-local" id="eventEnd" name="eventEnd"></span>
+        <span><input type="datetime-local" id="eventEnd" name="eventEnd" required></span>
 
         <br> <br>
 
         <label for="eventAddress">Address</label>
-        <span><input type="text" id="eventAddress" name="eventAddress"></span>
+        <span><input type="text" id="eventAddress" name="eventAddress" required></span>
 
-        <label for="eventState">State</label>
-        <span><select name="eventState">
+        <label for="eventState" >State</label>
+        <span><select name="eventState" required>
             <option value="" hidden selected>Select a State</option>
             <option value="Alabama">Alabama</option>
             <option value="Alaska">Alaska</option>
@@ -79,15 +79,15 @@
         </select></span>
 
         <label for="eventCity">City</label>
-        <span><input type="text" id="eventCity" name="eventCity"></span>
+        <span><input type="text" id="eventCity" name="eventCity" required></span>
 
         <br> <br>
 
         <label for="eventQuantity">Ticket Quantity</label>
-        <span><input type="number" id="eventQuantity" name="eventQuantity" placeholder="1"></span>
+        <span><input type="number" id="eventQuantity" name="eventQuantity" min="1" step="1" placeholder="1" required></span>
 
         <label for="ticketPrice">Ticket Price</label>
-        <span><input type="number" placeholder="$0.00" step="0.01" id="ticketPrice" name="ticketPrice" placeholder="$0.00"></span>
+        <span><input type="number" placeholder="$0.00" step="0.01" id="ticketPrice" name="ticketPrice" placeholder="$0.00" required></span>
 
         <input type="submit" value="Submit" style="float: right">
     </form>

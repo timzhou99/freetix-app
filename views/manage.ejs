@@ -8,27 +8,27 @@
 
 		<form method="POST" action="/events/<%= eventObj._id %>/manage">
 			<label for="eventName">Event Name</label>
-			<span><input type="text" id="eventName" name="eventName" value="<%= eventObj.eventName %>"></span>
+			<span><input type="text" id="eventName" name="eventName" value="<%= eventObj.eventName %>" required></span>
 
 			<label for="eventDescription">Event Description</label>
-			<span><textarea id="eventDescription" name="eventDescription" style="height:200px"><%= eventObj.eventDescription %></textarea></span>
+			<span><textarea id="eventDescription" name="eventDescription" style="height:200px" required><%= eventObj.eventDescription %></textarea></span>
 
 			<label for="eventIMG">Event Image URL</label>
-			<span><input type="text" id="eventIMG" name="eventIMG" placeholder="https://" value="<%= eventObj.eventPicture %>"></span>
+			<span><input type="text" id="eventIMG" name="eventIMG" placeholder="https://" value="<%= eventObj.eventPicture %>" required></span>
 
 			<label for="eventStart">Event Start</label>
-			<span><input type="datetime-local" id="eventStart" name="eventStart" value="<%= getLocalDate(eventObj.eventStart) %>"></span>
+			<span><input type="datetime-local" id="eventStart" name="eventStart" value="<%= getLocalDate(eventObj.eventStart) %>" required></span>
 
 			<label for="eventEnd">Event End</label>
-			<span><input type="datetime-local" id="eventEnd" name="eventEnd" value="<%= getLocalDate(eventObj.eventEnd) %>"></span>
+			<span><input type="datetime-local" id="eventEnd" name="eventEnd" value="<%= getLocalDate(eventObj.eventEnd) %>" required></span>
 
 			<br> <br>
 
 			<label for="eventAddress">Address</label>
-			<span><input type="text" id="eventAddress" name="eventAddress" value="<%= eventObj.eventAddress %>"></span>
+			<span><input type="text" id="eventAddress" name="eventAddress" value="<%= eventObj.eventAddress %>" required></span>
 
 			<label for="eventState">State</label>
-			<span><select name="eventState">
+			<span><select name="eventState" required>
                 <option value="<%=eventObj.eventState%>" hidden selected><%=eventObj.eventState%></option>
                 <option value="Alabama">Alabama</option>
                 <option value="Alaska">Alaska</option>
@@ -84,15 +84,15 @@
             </select></span>
 
 			<label for="eventCity">City</label>
-			<span><input type="text" id="eventCity" name="eventCity" value="<%= eventObj.eventCity %>"></span>
+			<span><input type="text" id="eventCity" name="eventCity" value="<%= eventObj.eventCity %>" required></span>
 
 			<br> <br>
 
 			<label for="eventQuantity">Ticket Quantity</label>
-			<span><input type="number" id="eventQuantity" name="eventQuantity" placeholder="1" value="<%= eventObj.maxQuantity %>"></span>
+			<span><input type="number" id="eventQuantity" name="eventQuantity" placeholder="1" min="1" step="1" value="<%= eventObj.maxQuantity %>" required></span>
 
 			<label for="ticketPrice">Ticket Price</label>
-			<span><input type="number" placeholder="$0.00" step="0.01" id="ticketPrice" name="ticketPrice" value="<%= eventObj.ticketPrice %>"></span>
+			<span><input type="number" placeholder="$0.00" step="0.01" id="ticketPrice" name="ticketPrice" value="<%= eventObj.ticketPrice %>" required></span>
 
 			<input type="button" value="Discard Changes" style="float: left" onclick="window.location.href = '/events/hosting';">
             <input type="button" value="Delete Event" style="float: left; margin-left: 20px;" onclick="window.location.href = '/events/<%= eventObj._id%>/delete';">

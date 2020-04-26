@@ -15,18 +15,25 @@
 
     <% if (tickets.length === 0) { %>
         <h3>No Tickets to Display</h3>
-    <% } %>
+    <% } else { %>
 
-    <% for (var i = 0; i < tickets.length; i++) { %>
+        <% for (var i = 0; i < tickets.length; i++) { %>
 
-        <div class="box">
-            <a href="/tickets/<%= tickets[i]._id %>" class="image fit"><img src="<%= tickets[i].event.eventPicture %>" alt="" /></a>
-            <div class="inner">
-                <h3><%= tickets[i].event.eventName %></h3>
-                <p><%= formatDateTime(tickets[i].event.eventStart) %></p>
-                <a href="/tickets/<%= tickets[i]._id %>" class="button fit">View Ticket</a>
-            </div>
-        </div>
+            <% if (tickets[i].ticketStatus) { %>
+
+                <div class="box">
+                    <a href="/tickets/<%= tickets[i]._id %>" class="image fit"><img src="<%= tickets[i].event.eventPicture %>" alt="" /></a>
+                    <div class="inner">
+                        <h3><%= tickets[i].event.eventName %></h3>
+                        <p><%= formatDateTime(tickets[i].event.eventStart) %></p>
+                        <a href="/tickets/<%= tickets[i]._id %>" class="button fit">View Ticket</a>
+                    </div>
+                </div>
+
+            <% } %>
+
+        <% } %>
+
 
     <% } %>
 

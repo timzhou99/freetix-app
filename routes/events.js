@@ -199,8 +199,14 @@ router.get('/:eventID/delete', ensureAuthenticated, (req, res) => {
         res.render('manage');
     else {
         Event.deleteOne({_id:req.params.eventID}, function(err) {
-            req.flash('success_msg', 'Successfully deleted the event!');
-            res.redirect('/events/hosting')
+            if (err) throw err;
+
+            User.update({_id:req.user._id}, { $pull: { events: req.params.eventID } }, function(err, event) {
+                if (err) throw err;
+
+                req.flash('success_msg', 'Successfully deleted the event!');
+                res.redirect('/events/hosting')
+            });
         });
     }
 
