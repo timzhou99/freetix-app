@@ -77,7 +77,7 @@ router.post('/create', ensureAuthenticated, (req, res) => {
             });
 
             req.flash('success_msg', 'Successfully created an event!');
-            res.redirect('/events/hosting');
+            res.redirect('/events/' + event._id);
         })
         .catch(err => console.log(err));
 
@@ -173,7 +173,7 @@ router.post('/:eventID/purchase', ensureAuthenticated, (req, res) => {
                         });
 
                         req.flash('success_msg', 'Successfully purchased a ticket!');
-                        res.redirect('/tickets');
+                        res.redirect('/tickets/' + ticket._id);
                     })
                     .catch(err => console.log(err));
 
