@@ -8,6 +8,9 @@ const QRCode = require('qrcode');
 const Ticket = require('../models/Ticket');
 
 
+//Event Model
+const Event = require('../models/Event');
+
 //View all the User's Tickets
 router.get('/', ensureAuthenticated, (req, res) => {
 
@@ -18,19 +21,22 @@ Ticket.find({})
 
         if (req.query.search === '' || req.query.search === undefined){
             filteredTickets = populatedTickets.filter(ele => {
-                return ele.event.eventEnd > Date.now();
+                console.log(ele._id, Event.exists({_id:ele._id}))
+                return Event.exists({_id:ele._id}, (err, result) => result) && ele.event.eventEnd > Date.now();
             });
         } else {
             filteredTickets = populatedTickets.filter(ele => {
-                return ele.event.eventEnd > Date.now() && ele.event.eventName.toLowerCase().includes(req.query.search.toLowerCase());
+                return Event.exists({_id:ele._id}, (err, result) => result) && ele.event.eventEnd > Date.now() && ele.event.eventName.toLowerCase().includes(req.query.search.toLowerCase());
             });
         }
+
+        console.log(filteredTickets);
 
         filteredTickets.sort((a,b) => {
             return a.event.eventStart-b.event.eventStart;
         });
 
-        res.render('tickets', {tickets: filteredTickets});
+        res.render('tickets', {tickets: populatedTickets});
     });
 });
 
