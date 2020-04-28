@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const TicketSchema = require('./Ticket').schema;
 
 // an event
 // * includes properties that pertain to the event

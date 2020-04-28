@@ -14,7 +14,7 @@ const Ticket = require('../models/Ticket');
 //View All Events (in the user's area)
 router.get('/', ensureAuthenticated, (req, res) => {
 
-    Event.find({eventState:req.user.userState}, function(err, events, count) {
+    Event.find({eventState:req.user.userState}, function(err, events) {
 
         let filteredEvents;
 
@@ -40,7 +40,7 @@ router.get('/', ensureAuthenticated, (req, res) => {
 //View Events User is Hosting
 router.get('/hosting', ensureAuthenticated, (req, res) => {
 
-    Event.find({eventManager:req.user._id}, function(err, events, count) {
+    Event.find({eventManager:req.user._id}, function(err, events) {
         res.render('hosting', {events});
     });
 
@@ -55,31 +55,45 @@ router.post('/create', ensureAuthenticated, (req, res) => {
 
     const { eventName, eventDescription, eventIMG, eventStart, eventEnd, eventAddress, eventCity, eventState, eventQuantity, ticketPrice} = req.body;
 
-    const newEvent = new Event({
-        eventManager: req.user._id,
-        eventName,
-        eventDescription,
-        eventPicture: eventIMG,
-        eventStart,
-        eventEnd,
-        eventAddress,
-        eventCity,
-        eventState,
-        maxQuantity: eventQuantity,
-        ticketPrice
-    });
+    if (eventIMG.match(/\.(jpeg|jpg|gif|png)$/) !== null){ //Code referenced from https://stackoverflow.com/questions/9714525/javascript-image-url-verify
 
-    newEvent.save()
-        .then(event => {
+        const newEvent = new Event({
+            eventManager: req.user._id,
+            eventName,
+            eventDescription,
+            eventPicture: eventIMG,
+            eventStart,
+            eventEnd,
+            eventAddress,
+            eventCity,
+            eventState,
+            maxQuantity: eventQuantity,
+            ticketPrice
+        });
 
-            User.findOneAndUpdate({_id:req.user._id}, {$push: {events:newEvent}}, function(err,success){
-                if (err) throw err;
-            });
+        newEvent.save()
+            .then(event => {
 
-            req.flash('success_msg', 'Successfully created an event!');
-            res.redirect('/events/' + event._id);
-        })
-        .catch(err => console.log(err));
+                User.findOneAndUpdate({_id:req.user._id}, {$push: {events:newEvent}}, function(err){
+                    if (err) {
+                        throw err;
+                    }
+                });
+
+                req.flash('success_msg', 'Successfully created an event!');
+                res.redirect('/events/' + event._id);
+            })
+            .catch(err => console.log(err));
+
+    } else {
+
+        const errors = [];
+        errors.push({ msg: "Not a valid image. File extension must end in jpeg, jpg, gif, or png."});
+        res.render('create', {errors, eventName, eventDescription, eventStart, eventEnd, eventAddress, eventCity, eventState, eventQuantity, ticketPrice});
+
+    }
+
+
 
 });
 
@@ -102,8 +116,9 @@ router.get('/:eventID/manage', ensureAuthenticated, (req, res) => {
         return ele.toString() === req.params.eventID;
     });
 
-    if (found === undefined)
+    if (found === undefined) {
         res.render('manage');
+    }
     else {
         Event.findOne({_id:req.params.eventID}, function(err, eventObj) {
             res.render('manage', {eventObj});
@@ -116,25 +131,41 @@ router.post('/:eventID/manage', ensureAuthenticated, (req, res) => {
 
     const { eventName, eventDescription, eventIMG, eventStart, eventEnd, eventAddress, eventCity, eventState, eventQuantity, ticketPrice} = req.body;
 
-    const updatedEvent = {
-        eventName,
-        eventDescription,
-        eventPicture: eventIMG,
-        eventStart,
-        eventEnd,
-        eventAddress,
-        eventCity,
-        eventState,
-        maxQuantity: eventQuantity,
-        ticketPrice,
-    };
+    if (eventIMG.match(/\.(jpeg|jpg|gif|png)$/) !== null){
 
-    Event.updateOne({_id:req.params.eventID}, updatedEvent, function(err, response){
-        if (err) throw err;
+        const updatedEvent = {
+            eventName,
+            eventDescription,
+            eventPicture: eventIMG,
+            eventStart,
+            eventEnd,
+            eventAddress,
+            eventCity,
+            eventState,
+            maxQuantity: eventQuantity,
+            ticketPrice,
+        };
 
-        req.flash('success_msg', 'Successfully modified the event!');
-        res.redirect('/events/hosting');
-    });
+        Event.updateOne({_id:req.params.eventID}, updatedEvent, function(err){
+            if (err) {
+                throw err;
+            }
+
+            req.flash('success_msg', 'Successfully modified the event!');
+            res.redirect('/events/hosting');
+        });
+
+    } else {
+
+        const eventObj = {
+            _id:req.params.eventID, eventName, eventDescription, eventIMG, eventStart, eventEnd, eventAddress, eventCity, eventState, maxQuantity: eventQuantity, ticketPrice,
+        };
+
+        const errors = [];
+        errors.push({ msg: "Not a valid image. File extension must end in jpeg, jpg, gif, or png."});
+        res.render('manage', {errors, eventObj});
+
+    }
 
 });
 
@@ -142,13 +173,17 @@ router.post('/:eventID/purchase', ensureAuthenticated, (req, res) => {
 
     Event.findOne({_id:req.params.eventID})
         .populate('tickets').exec((err, populatedEvent) => {
-            if (err) throw err;
+            if (err) {
+                throw err;
+            }
 
             let currentQuantity = 1;
 
             populatedEvent.tickets.forEach(ele => {
-                if (ele.ticketStatus)
+                if (ele.ticketStatus) {
                     currentQuantity++;
+                }
+
             });
 
             if (populatedEvent && currentQuantity <= populatedEvent.maxQuantity){
@@ -164,12 +199,16 @@ router.post('/:eventID/purchase', ensureAuthenticated, (req, res) => {
                 newTicket.save()
                     .then(ticket => {
 
-                        User.findOneAndUpdate({_id:req.user._id}, {$push: {tickets:newTicket}}, function(err,success){
-                            if (err) throw err;
+                        User.findOneAndUpdate({_id:req.user._id}, {$push: {tickets:newTicket}}, function(err){
+                            if (err) {
+                                throw err;
+                            }
                         });
 
-                        Event.findOneAndUpdate({_id:populatedEvent._id}, {$push: {tickets:newTicket}}, function(err,success){
-                            if (err) throw err;
+                        Event.findOneAndUpdate({_id:populatedEvent._id}, {$push: {tickets:newTicket}}, function(err){
+                            if (err) {
+                                throw err;
+                            }
                         });
 
                         req.flash('success_msg', 'Successfully purchased a ticket!');
@@ -195,17 +234,23 @@ router.get('/:eventID/delete', ensureAuthenticated, (req, res) => {
         return ele.toString() === req.params.eventID;
     });
 
-    if (found === undefined)
+    if (found === undefined){
         res.render('manage');
+    }
+
     else {
         Event.deleteOne({_id:req.params.eventID}, function(err) {
-            if (err) throw err;
+            if (err) {
+                throw err;
+            }
 
-            User.update({_id:req.user._id}, { $pull: { events: req.params.eventID } }, function(err, event) {
-                if (err) throw err;
+            User.update({_id:req.user._id}, { $pull: { events: req.params.eventID } }, function(err) {
+                if (err) {
+                    throw err;
+                }
 
                 req.flash('success_msg', 'Successfully deleted the event!');
-                res.redirect('/events/hosting')
+                res.redirect('/events/hosting');
             });
         });
     }

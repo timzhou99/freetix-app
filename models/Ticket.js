@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const EventSchema = require('./Event').schema;
 
 // a ticket
 // * each ticket is tied to an eventID and a User

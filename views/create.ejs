@@ -1,30 +1,32 @@
 <h1>Create an Event</h1>
 
+<%- include('partials/messages'); %>
+
 <div class="create">
     <form method="POST" action="/events/create">
         <label for="eventName">Event Name</label>
-        <span><input type="text" id="eventName" name="eventName" required></span>
+        <span><input type="text" id="eventName" name="eventName" value="<%= typeof eventName != 'undefined' ? eventName : '' %>" required></span>
 
         <label for="eventDescription">Event Description</label>
-        <span><textarea id="eventDescription" name="eventDescription" style="height:200px" required></textarea></span>
+        <span><textarea id="eventDescription" name="eventDescription" style="height:200px" required><%= typeof eventDescription != 'undefined' ? eventDescription : '' %></textarea></span>
 
         <label for="eventIMG">Event Image URL</label>
         <span><input type="text" id="eventIMG" name="eventIMG" placeholder="https://" required></span>
 
         <label for="eventStart">Event Start</label>
-        <span><input type="datetime-local" id="eventStart" name="eventStart" required></span>
+        <span><input type="datetime-local" id="eventStart" name="eventStart" value="<%= typeof eventStart != 'undefined' ? getLocalDate(eventStart) : '' %>" required></span>
 
         <label for="eventEnd">Event End</label>
-        <span><input type="datetime-local" id="eventEnd" name="eventEnd" required></span>
+        <span><input type="datetime-local" id="eventEnd" name="eventEnd" value="<%= typeof eventEnd != 'undefined' ? getLocalDate(eventEnd) : '' %>" required></span>
 
         <br> <br>
 
         <label for="eventAddress">Address</label>
-        <span><input type="text" id="eventAddress" name="eventAddress" required></span>
+        <span><input type="text" id="eventAddress" name="eventAddress" value="<%= typeof eventAddress != 'undefined' ? eventAddress : '' %>" required></span>
 
         <label for="eventState" >State</label>
         <span><select name="eventState" required>
-            <option value="" hidden selected>Select a State</option>
+            <option value="<%= typeof eventState != 'undefined' ? eventState : '' %>" hidden selected><%= typeof eventState != 'undefined' ? eventState : 'Select a State' %></option>
             <option value="Alabama">Alabama</option>
             <option value="Alaska">Alaska</option>
             <option value="Arizona">Arizona</option>
@@ -79,15 +81,15 @@
         </select></span>
 
         <label for="eventCity">City</label>
-        <span><input type="text" id="eventCity" name="eventCity" required></span>
+        <span><input type="text" id="eventCity" name="eventCity" value="<%= typeof eventCity != 'undefined' ? eventCity : '' %>" required></span>
 
         <br> <br>
 
         <label for="eventQuantity">Ticket Quantity</label>
-        <span><input type="number" id="eventQuantity" name="eventQuantity" min="1" step="1" placeholder="1" required></span>
+        <span><input type="number" id="eventQuantity" name="eventQuantity" min="1" step="1" placeholder="1" value="<%= typeof eventQuantity != 'undefined' ? eventQuantity : '' %>" required></span>
 
         <label for="ticketPrice">Ticket Price</label>
-        <span><input type="number" placeholder="$0.00" step="0.01" id="ticketPrice" name="ticketPrice" placeholder="$0.00" required></span>
+        <span><input type="number" placeholder="$0.00" step="0.01" id="ticketPrice" name="ticketPrice" placeholder="$0.00" value="<%= typeof ticketPrice != 'undefined' ? ticketPrice : '' %>" required></span>
 
         <input type="submit" value="Submit" style="float: right">
     </form>

@@ -1,8 +1,5 @@
 const mongoose = require('mongoose');
 
-const EventSchema = require('./Event').schema;
-const TicketSchema = require('./Ticket').schema;
-
 // users
 // * our site requires authentication...
 // * so users have a username and password

@@ -9,7 +9,7 @@ const User = require('../models/User');
 //Login Page
 router.get('/login', (req, res) => {
     res.render('login');
-})
+});
 
 //Register Page
 router.get('/register', (req, res) => {
@@ -20,7 +20,7 @@ router.get('/register', (req, res) => {
 router.post('/register', (req, res) => {
     const { email, password, name, city, state } = req.body;
 
-    let errors = [];
+    const errors = [];
 
     // Check Required Fields
     if (!email || !password || !name || !city || !state) {
@@ -60,17 +60,19 @@ router.post('/register', (req, res) => {
                     //Hash Password
                     bcrypt.genSalt(10, (err, salt) =>
                         bcrypt.hash(newUser.password, salt, (err, hash) => {
-                            if(err) throw err;
+                            if(err) {
+                                throw err;
+                            }
                             //Set password to hashed...
                             newUser.password = hash;
                             //Save user
                             newUser.save()
-                                .then(user => {
+                                .then(() => {
                                     req.flash('success_msg', 'You are now registered!');
                                     res.redirect('/users/login');
                                 })
                                 .catch(err => console.log(err));
-                    }))
+                    }));
 
                 }
             });
