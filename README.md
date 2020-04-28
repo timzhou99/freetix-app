@@ -132,9 +132,9 @@ An Example Ticket:
 * (5 points) Integrate user authentication
     * I'm going to be using passport for user authentication
     * It's a middleware for Node.js so it is very flexible to be used in an Express-based web app.
-* (5 points) Automated functional testing for all of my routes 
-    * Will be using Selenium and Python to run all my tests 
-    * Each test run will register and login a user; create, modify, and delete an event; and purchase and cancel a ticket.
+* (5 points) Automated eslint with gulp
+    * Will be using gulp to automate work tests
+    * Eslint will run everytime a file change is detected in the directory.
 * (2 points) Implement qrcode module for server side functions
     * will generate a QR code image for every ticket created (associated with the ticket ID)
     * this will be helpful in future releases of the web app to "check people into an event"
@@ -147,5 +147,4 @@ An Example Ticket:
 
 1. [passport.js authentication docs](http://passportjs.org/docs) - (https://www.youtube.com/watch?v=6FOq4cUdH8k)
 2. [tutorial on qrcode](http://thecodebarbarian.com/creating-qr-codes-with-node-js.html) - (add link to source code that was based on this)
-3. [google maps docs](https://developers.google.com/maps/documentation/embed) - (add link to source code that was based on this)
 
