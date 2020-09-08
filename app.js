@@ -18,7 +18,7 @@ let db;
 if (process.env.NODE_ENV === 'PRODUCTION') {
     // if we're in PRODUCTION mode, then read the configration from a file
     // use blocking file io to do this...
-    db = require('./config/keys').MongoURI;
+    db = process.env.MongoURI;
 } else {
     // if we're not in PRODUCTION mode, then use
     db = 'mongodb://localhost/freetix';
