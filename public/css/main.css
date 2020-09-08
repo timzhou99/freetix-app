@@ -7,7 +7,7 @@
 
 /* Reset */
 
-	html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+	html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
 		margin: 0;
 		padding: 0;
 		border: 0;
@@ -144,7 +144,6 @@
 		transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
 		color: rgba(255, 255, 255, 0.75);
 		text-decoration: none;
-		border-bottom: 1px dotted;
 		outline: 0;
 	}
 
@@ -1132,20 +1131,22 @@
 /* Style the header with a grey background and some padding */
 .header {
 	overflow: hidden;
-	background-color: lightgray;
-	padding: 20px 10px;
+	background-color: #1E1E24;
+	padding: 10px 5px;
+	outline: 0;
 }
 
 /* Style the header links */
 .header a {
 	float: left;
-	color: black;
+	color: aliceblue;
 	text-align: center;
 	padding: 12px;
 	text-decoration: none;
 	font-size: 18px;
 	line-height: 25px;
-	border-radius: 4px;
+	outline: none;
+	-moz-outline-style: 0;
 }
 
 /* Style the logo link (notice that we set the same value of line-height and font-size to prevent the header to increase when the font gets bigger */
@@ -1169,6 +1170,10 @@
 /* Float the link section to the right */
 .header-right {
 	float: right;
+}
+
+.noHover{
+	pointer-events: none;
 }
 
 /* Add media queries for responsiveness - when the screen is 500px wide or less, stack the links on top of each other */
