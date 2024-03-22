@@ -6,8 +6,7 @@
   "scripts": {
     "start": "node app.js",
     "dev": "nodemon app.js",
-    "gulp": "gulp watch",
-    "build": "react-scripts build"
+    "gulp": "gulp watch"
   },
   "repository": {
     "type": "git",
