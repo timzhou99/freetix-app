@@ -12,9 +12,9 @@ const User = require('../models/User');
 const Ticket = require('../models/Ticket');
 
 //View All Events (in the user's area)
-router.get('/', ensureAuthenticated, (req, res) => {
+router.get('/', (req, res) => {
 
-    Event.find({eventState:req.user.userState}, function(err, events) {
+    Event.find({}, function(err, events) {
 
         let filteredEvents;
 
@@ -98,7 +98,7 @@ router.post('/create', ensureAuthenticated, (req, res) => {
 });
 
 //View Event Details Page
-router.get('/:eventID', ensureAuthenticated, (req, res) => {
+router.get('/:eventID', (req, res) => {
 
     Event.findOne({_id:req.params.eventID})
         .populate('tickets').exec((err, populatedEvent) => {
