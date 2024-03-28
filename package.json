@@ -8,6 +8,9 @@
     "dev": "nodemon app.js",
     "gulp": "gulp watch"
   },
+  "engines": {
+    "node": ">=18.18.0 <19.0.0"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/nyu-csci-ua-0480-008-spring-2020/timzhou99-final-project.git"
