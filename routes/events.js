@@ -32,7 +32,10 @@ router.get('/', (req, res) => {
             return a.eventStart-b.eventStart;
         });
 
-        res.render('events', {events:filteredEvents, state:req.user.userState});
+        if (req.user)
+            res.render('events', { layout: 'layout_authenticated', events:filteredEvents});
+        else
+            res.render('events', {events:filteredEvents});
     });
 
 });
@@ -41,14 +44,14 @@ router.get('/', (req, res) => {
 router.get('/hosting', ensureAuthenticated, (req, res) => {
 
     Event.find({eventManager:req.user._id}, function(err, events) {
-        res.render('hosting', {events});
+        res.render('hosting', { layout: 'layout_authenticated', events});
     });
 
 });
 
 //Create an Event Page
 router.get('/create', ensureAuthenticated, (req, res) => {
-    res.render('create');
+    res.render('create', { layout: 'layout_authenticated'});
 });
 
 router.post('/create', ensureAuthenticated, (req, res) => {
@@ -89,7 +92,7 @@ router.post('/create', ensureAuthenticated, (req, res) => {
 
         const errors = [];
         errors.push({ msg: "Not a valid image. File extension must end in jpeg, jpg, gif, or png."});
-        res.render('create', {errors, eventName, eventDescription, eventStart, eventEnd, eventAddress, eventCity, eventState, eventQuantity, ticketPrice});
+        res.render('create', { layout: 'layout_authenticated', errors, eventName, eventDescription, eventStart, eventEnd, eventAddress, eventCity, eventState, eventQuantity, ticketPrice});
 
     }
 
@@ -103,7 +106,11 @@ router.get('/:eventID', (req, res) => {
     Event.findOne({_id:req.params.eventID})
         .populate('tickets').exec((err, populatedEvent) => {
             User.findOne({_id:populatedEvent.eventManager}, function(err, user){
-                res.render('event', {eventObj:populatedEvent, manager:user.name});
+
+                if (req.user)
+                    res.render('event', { layout: 'layout_authenticated', eventObj:populatedEvent, manager:user.name});
+                else
+                    res.render('event', {eventObj:populatedEvent, manager:user.name});
             });
         });
 
@@ -121,7 +128,7 @@ router.get('/:eventID/manage', ensureAuthenticated, (req, res) => {
     }
     else {
         Event.findOne({_id:req.params.eventID}, function(err, eventObj) {
-            res.render('manage', {eventObj});
+            res.render('manage', { layout: 'layout_authenticated', eventObj});
         });
     }
 
@@ -163,7 +170,7 @@ router.post('/:eventID/manage', ensureAuthenticated, (req, res) => {
 
         const errors = [];
         errors.push({ msg: "Not a valid image. File extension must end in jpeg, jpg, gif, or png."});
-        res.render('manage', {errors, eventObj});
+        res.render('manage', { layout: 'layout_authenticated', errors, eventObj});
 
     }
 

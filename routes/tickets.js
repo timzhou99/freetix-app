@@ -33,7 +33,7 @@ Ticket.find({})
             return a.event.eventStart-b.event.eventStart;
         });
 
-        res.render('tickets', {tickets: populatedTickets});
+        res.render('tickets', { layout: 'layout_authenticated', tickets: populatedTickets});
     });
 });
 
@@ -52,7 +52,7 @@ router.get('/:ticketID', ensureAuthenticated, (req, res) => {
         Ticket.findOne({_id:req.params.ticketID})
             .populate('event').exec((err, populatedTicket) => {
             QRCode.toDataURL(populatedTicket._id.toString(), function(err, url){
-                res.render('ticket', {ticket: populatedTicket, holder: req.user.name, qrcode:url});
+                res.render('ticket', { layout: 'layout_authenticated', ticket: populatedTicket, holder: req.user.name, qrcode:url});
             });
 
         });
